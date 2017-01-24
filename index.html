@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>animate</title>
+    <link type="text/css" rel="stylesheet" href="css/swiper.css" />
+    <link type="text/css" rel="stylesheet" href="css/move.css" />
+</head>
+
+<body>
+    <h1 class="banner">轮播图</h1>
+    <div id="outer">
+        <div id="left">
+            <div>&lt</div>
+        </div>
+        <div id="right">
+            <div>&gt</div>
+        </div>
+        <div id="inner">
+            <div><img src="images/loading.gif" trueSrc="images/banner1.jpg"></div>
+            <div><img src="images/loading.gif" trueSrc="images/banner2.jpg"></div>
+            <div><img src="images/loading.gif" trueSrc="images/banner3.jpg"></div>
+            <div><img src="images/loading.gif" trueSrc="images/banner4.jpg"></div>
+        </div>
+        <ul id="button">
+            <li class="protent">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+    </div>
+    <div class="animate">
+        <h1 class="move-title">简单变换</h1>
+        <img class="move" id="move" src="images/banner5.jpg">
+        <button class="level" id="level">直线运动</button>
+        <button class="diagonal" id="diagonal">对角运动</button>
+        <button class="change-opacity" id="change-opacity">特效动画</button>
+    </div>
+    <script src="js/animate.js"></script>
+    <script>
+    function swiper() {
+        var oLis=document.getElementById("button").getElementsByTagName("li");
+        var oDiv=document.getElementById("inner").getElementsByTagName("div").item(0);
+        var imgList = document.getElementById("inner").getElementsByTagName("img");
+        //实现无缝滚动
+        var newDiv=oDiv.cloneNode(true);
+        inner.appendChild(newDiv);
+        inner.style.width=inner.offsetWidth+newDiv.offsetWidth+"px";
+        //实现图片延迟加载
+        [].forEach.call(imgList, function (curImg) {
+        var oImg = new Image;
+        oImg.src = curImg.getAttribute("trueSrc");
+        oImg.onload = function () {
+            curImg.src = this.src;
+            oImg = null;
+        }
+    });
+    for(var i=0;i<oLis.length;i++){
+        oLis[i].n=i;
+        oLis[i].onclick=function () {
+            animate(inner,{left:this.n*-500},800);
+            step=this.n;
+            changeColor(step);
+            clearTimeout(autoTimer);
+            autoTimer=window.setTimeout(function () {
+                autoTimer=window.setInterval(leftMove,2000);
+            },3000);
+        }
+    }
+    function changeColor(n) {
+        for(var i=0;i<oLis.length;i++){
+            oLis[i].className="";
+        }
+        oLis[n].className="protent";
+    }
+    var step=0;
+    function leftMove() {
+        step++;
+        if(step>=5){
+          inner.style.left=0;
+            step=1;
+
+        }
+        if(step==4){
+            changeColor(0);
+        }else{
+            changeColor(step);
+        }
+        animate(inner,{left:step*-500},600);
+    }
+    function rightMove() {
+        step--;
+        if(step<0){
+            inner.style.left=-2000+"px";
+            step=3;
+        }
+        if(step==4){
+            changeColor(0);
+        }else{
+            changeColor(step);
+        }
+        animate(inner,{left:step*-500},600);
+    }
+    var autoTimer=setInterval(leftMove,2000);
+    var right=document.getElementById("right");
+    var left=document.getElementById("left");
+
+    right.onclick=function () {
+        rightMove();
+        clearTimeout(autoTimer);
+        autoTimer=window.setTimeout(function () {
+            autoTimer=window.setInterval(leftMove,2000);
+        },3000);
+
+    }
+    left.onclick=function () {
+       leftMove();
+        clearTimeout(autoTimer);
+        autoTimer=window.setTimeout(function () {
+            autoTimer=window.setInterval(leftMove,2000);
+        },3000);
+    }
+    }
+    swiper();
+    function move() {
+        var oImage = document.getElementById("move");
+        var level = document.getElementById("level");
+        var diagonal = document.getElementById("diagonal");
+        var changeOpacity = document.getElementById("change-opacity");
+        level.onclick = function() {
+            animate(oImage,{left:500,width:100,height:100},800);
+        }
+        diagonal.onclick = function() {
+            animate(oImage,{left:300,top:100},800);
+        }
+        changeOpacity.onclick = function() {
+            animate(oImage,{left:500,opacity:0.5},800,28);
+        }
+    }
+    move()
+</script>
+</body>
+
+</html>

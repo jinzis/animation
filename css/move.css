@@ -1,0 +1,45 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.animate{
+    position: relative;
+    top: 10px;
+    left: 10px;
+    width: 500px;
+    margin: 0 auto;
+}
+.move-title{
+    position: absolute;
+    top: 0;
+    margin-left:10px;
+}
+
+.move{
+    position: absolute;
+    top: 50px;
+    left:0; 
+    right: 0;
+    border: none;
+    display: block;
+    width: 200px;
+    height: 200px;
+    opacity: 1;
+}
+button{
+    outline: 0;
+    border: none;
+    width: 80px;
+    height: 30px;
+    background-color: lightblue;
+    position: absolute;
+    top: 260px;
+    left: 0;
+    cursor: pointer;
+}
+.diagonal{
+    left: 100px;
+}
+.change-opacity{
+    left: 190px;
+}
